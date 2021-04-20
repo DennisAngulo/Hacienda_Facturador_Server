@@ -94,7 +94,7 @@ router.route('/generateXML').post((req, res) => {
         req.body.emitterDistrict,
         req.body.emitterNeighborhood,
         req.body.emitterCountryCode,
-        req.body.emitterFax,
+        req.body.emitterPhone,
         req.body.emitterEmail,
         req.body.emitterBuisnessName,
         req.body.emitterAddressDrescription
@@ -109,7 +109,7 @@ router.route('/generateXML').post((req, res) => {
         req.body.receiverDistrict,
         req.body.receiverNeighborhood,
         req.body.receiverCountryCode,
-        req.body.receiverFax,
+        req.body.receiverPhone,
         req.body.receiverEmail
     );
     
@@ -129,13 +129,15 @@ router.route('/generateXML').post((req, res) => {
 
     APIGetConsecutive(request,
         function(data){
-            consecutive = data.resp.consectivo,
-            key = data.resp.clave
+            return data;
         }, 
         (data) => {
             res.status(400).json(data);
         }
-    );
+    ).then((data) =>{
+        consecutive = data.resp.consectivo,
+        key = data.resp.clave
+    })
 
     var bill = new Bill(
         key,
@@ -147,9 +149,9 @@ router.route('/generateXML').post((req, res) => {
         req.body.payMethod,
         req.body.currencyCode,
         req.body.exchangeRate,
-        req.body.lines,
+        /*req.body.lines,
         req.body.refDocs,
-        req.body.charges
+        req.body.charges*/
     );
 
     bill.issueDate = date;

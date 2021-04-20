@@ -29,7 +29,7 @@ export default class Bill{
     #otherCharges;
 
     constructor(key, consecutive, emitter, receiver, sellCondition, creditTerm,
-        payMethod, currencyCode, exchangeRate, others, othersType, lines, refDocs, charges){
+        payMethod, currencyCode, exchangeRate){
             this.#key = key;
             this.#consecutive = consecutive;
             //this.#issueDate = ;
@@ -51,11 +51,11 @@ export default class Bill{
             this.#totalNetSold = 0;
             this.#totalTaxes = 0;
             this.#totalVoucher = 0;
-            this.#others = others;
-            this.#othersType = othersType;
-            this.#lines = lines;
-            this.#referenceDocuments = refDocs;
-            this.#otherCharges = charges;
+            this.#others = "";
+            this.#othersType = "";
+            this.#lines = [];
+            this.#referenceDocuments = [];
+            this.#otherCharges = [];
         }
 
     //Getter
@@ -199,6 +199,8 @@ export default class Bill{
 
     format(){
         var linesJSON = {};
+        var referenceDocsJSON = {};
+        var otherChargesJSON = {};
         var billJSON = {
             clave: this.#key,
             consecutivo: this.#consecutive,
@@ -215,7 +217,6 @@ export default class Bill{
             emisor_cod_pais: this.#emitter.countryCode,
             emisor_tel: this.#emitter.telefone,
             emisor_cod_pais_fax: this.#emitter.countryCodeFax,
-            emisor_fax: this.#emitter.fax,
             emisor_email: this.#emitter.email,  
             receptor_nombre: this.#emitter.name,
             receptor_tipo_identif: this.#emitter.IDType,
@@ -227,7 +228,6 @@ export default class Bill{
             receptor_cod_pais: this.#emitter.countryCode,
             receptor_tel: this.#emitter.telefone,
             receptor_cod_pais_fax: this.#emitter.countryCodeFax,
-            receptor_fax: this.#emitter.fax,
             receptor_email: this.#emitter.email,
             condicion_venta: this.#sellCondition,
             plazo_credito: this.#creditTerm,
@@ -254,7 +254,20 @@ export default class Bill{
             linesJSON[i.toString()] = this.#lines[i - 1].format();
         }
 
+        for (var i = 1; i <= this.#referenceDocuments.length; i++){
+            referenceDocsJSON[i.toString()] = this.#referenceDocuments[i - 1].format();
+        }
+
+        for (var i = 1; i <= this.#otherCharges.length; i++){
+            otherChargesJSON[i.toString()] = this.#otherCharges[i - 1].format();
+        }
+
         billJSON.detalles = linesJSON;
+
+        if(this.#referenceDocuments.length > 0)  billJSON["referencias"] = referenceDocsJSON;
+        if(this.#otherCharges.length > 0)  billJSON["otrasCargas"] = otherChargesJSON;
+
+        return billJSON;
     }
 
 }

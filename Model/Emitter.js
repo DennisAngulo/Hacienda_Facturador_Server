@@ -5,9 +5,9 @@ export default class Emitter extends Person{
     #attrAddressDescription
 
     constructor(name, IDType, ID, province, canton, district, neighborhood, 
-                countryCode, fax, email, businessName, addressDescription){
+                countryCode, telefone, email, businessName, addressDescription){
         super(  name, IDType, ID, province, canton, district, 
-                neighborhood, countryCode, fax, email);
+                neighborhood, countryCode, telefone, email);
         this.#attrBusinessName = businessName;
         this.#attrAddressDescription = addressDescription;
     }
