@@ -14,6 +14,8 @@ const port = process.env.PORT || 8080;
 process.env.__dirname = (() => {let x = path.dirname(decodeURI(new URL(import.meta.url).pathname)); return path.resolve( (process.platform == "win32") ? x.substr(1) : x ); })();
 
 app.use(cors());
+app.use(express.json()) 
+app.use(express.urlencoded({extended: false}))
 
 /*const billRouter = require('./routes/BillRouter');
 const personRouter = require('./routes/PersonRouter');*/

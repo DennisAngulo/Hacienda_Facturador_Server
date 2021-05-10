@@ -54,8 +54,6 @@ export default class Bill{
             this.#others = "";
             this.#othersType = "";
             this.#lines = [];
-            this.#referenceDocuments = [];
-            this.#otherCharges = [];
         }
 
     //Getter

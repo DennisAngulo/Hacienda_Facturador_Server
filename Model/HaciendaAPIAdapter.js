@@ -136,6 +136,14 @@ export function APILogin(userData, success, error){
     callPost(req,userData,success,error)
 }
 
+export function APIRegister(userData, success, error){
+    var req = {
+        w: "users",
+        r: "users_register"
+    };
+    callPost(req,userData,success,error)
+}
+
 export function APIGenerateXML(userData, success, error){
     var req = {
         w: "genXML",

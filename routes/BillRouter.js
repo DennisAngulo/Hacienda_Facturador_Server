@@ -154,6 +154,8 @@ router.route('/generateXML').post((req, res) => {
         req.body.charges*/
     );
 
+    
+
     bill.issueDate = date;
 
     var calculator = new Calculator();
